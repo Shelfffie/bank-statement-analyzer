@@ -1,6 +1,6 @@
 "use client";
 
-import { CsvFormat } from "@/app/utils/types";
+import { CsvFormat } from "@/app/_utils/types";
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,9 +15,11 @@ import {
 
 export function SearchByCounterpartyOrDescription({
   data,
+  filteredData,
   setFilteredData,
 }: {
   data: CsvFormat[];
+  filteredData: CsvFormat[];
   setFilteredData: React.Dispatch<React.SetStateAction<CsvFormat[]>>;
 }) {
   const [inputValue, setInputValue] = useState<string>("");

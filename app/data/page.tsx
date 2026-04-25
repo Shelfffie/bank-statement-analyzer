@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CsvFormat } from "../utils/types";
+import { CsvFormat } from "../_utils/types";
 import { useRouter } from "next/navigation";
-import { SearchByCounterpartyOrDescription } from "./components/searching";
+import { SearchByCounterpartyOrDescription } from "./_components/searching";
+import { Filter } from "./_components/filter";
+import DisplayAllCards from "./_components/cards/allCards";
 
 export default function DataPage() {
   const router = useRouter();
@@ -16,21 +18,29 @@ export default function DataPage() {
       router.push("/");
       return;
     }
-    setData(JSON.parse(sessionStorageData));
-    setFilteredData(JSON.parse(sessionStorageData));
+    const data = JSON.parse(sessionStorageData);
+    data.map(
+      (item: CsvFormat) =>
+        (item.type = String(item.amount).startsWith("-") ? "витрати" : "дохід")
+    );
+    console.log(data);
+    setData(data);
+    setFilteredData(data);
     setLoading(false);
-    console.log(JSON.parse(sessionStorageData));
   }, []);
 
   if (isLoading) return <h1>Loading...</h1>;
 
   return (
     <div className="bg-gray-800 flex flex-col justify-center items-center ">
+      <DisplayAllCards data={filteredData} />
       <div>
         <SearchByCounterpartyOrDescription
           data={data}
+          filteredData={filteredData}
           setFilteredData={setFilteredData}
         />
+        <Filter data={data} setFilteredData={setFilteredData} />
       </div>
       <table>
         <thead>
@@ -49,9 +59,7 @@ export default function DataPage() {
               <td className="border-solid border-2 p-5">{item.counterparty}</td>
               <td className="border-solid border-2 p-5">{item.description}</td>
               <td className="border-solid border-2 p-5">{item.amount}</td>
-              <td className="border-solid border-2 p-5">
-                {String(item.amount).startsWith("-") ? "витрати" : "дохід"}
-              </td>
+              <td className="border-solid border-2 p-5">{item.type}</td>
             </tr>
           ))}
         </tbody>

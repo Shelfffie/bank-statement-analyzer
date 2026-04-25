@@ -3,4 +3,5 @@ export type CsvFormat = {
   counterparty: string;
   description: string;
   amount: number;
+  type?: string;
 };

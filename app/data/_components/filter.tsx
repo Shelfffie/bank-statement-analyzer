@@ -1,6 +1,6 @@
 "use client";
 
-import { CsvFormat } from "@/app/utils/types";
+import { CsvFormat } from "@/app/_utils/types";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Select,
@@ -19,14 +19,26 @@ export function Filter({
   data: CsvFormat[];
   setFilteredData: React.Dispatch<React.SetStateAction<CsvFormat[]>>;
 }) {
-  useEffect(() => {}, []);
+  const filterByItem = (e: string) => {
+    if (e === "default") {
+      setFilteredData(data);
+    } else if (e === "profit") {
+      setFilteredData(
+        data.filter((item) => !String(item.amount).startsWith("-"))
+      );
+    } else {
+      setFilteredData(
+        data.filter((item) => String(item.amount).startsWith("-"))
+      );
+    }
+  };
 
   return (
     <div className="flex flex-row mt-15">
-      <p>Філ:</p>
+      <p>Фільтр:</p>
       <Select
         onValueChange={(e) => {
-          setSelectedItem(e);
+          filterByItem(e);
           console.log(e);
         }}
       >
@@ -35,10 +47,10 @@ export function Filter({
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Searching by</SelectLabel>
-            <SelectItem value="default">Do not searching</SelectItem>
-            <SelectItem value="counterparty">Counterparty</SelectItem>
-            <SelectItem value="description">Description</SelectItem>
+            <SelectLabel>Filter by type</SelectLabel>
+            <SelectItem value="default">Default state</SelectItem>
+            <SelectItem value="profit">Profit</SelectItem>
+            <SelectItem value="exprenses">Expenses</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

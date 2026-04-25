@@ -1,4 +1,4 @@
-import Dropzone from "./comps/dropzone";
+import Dropzone from "./_comps/dropzone";
 
 export default function Home() {
   return (
