@@ -1,40 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { CsvFormat } from "../_utils/types";
-import { useRouter } from "next/navigation";
 import { SearchByCounterpartyOrDescription } from "./_components/searching";
 import { Filter } from "./_components/filter";
 import DisplayAllCards from "./_components/cards/allCards";
+import TableComponent from "./_components/table-comp";
+import { TopCounterparties } from "./utils/calculate-top-counterparties";
+import UsePagination from "./hooks/pagination";
+import { useData } from "./hooks/useData";
+import PaginationComponent from "./_components/pagination-buttons";
 
 export default function DataPage() {
-  const router = useRouter();
-  const [data, setData] = useState<CsvFormat[]>([]);
-  const [filteredData, setFilteredData] = useState<CsvFormat[]>([]);
-  const [isLoading, setLoading] = useState<boolean>(true);
-  useEffect(() => {
-    const sessionStorageData = sessionStorage.getItem("data");
-    if (!sessionStorageData) {
-      router.push("/");
-      return;
-    }
-    const data = JSON.parse(sessionStorageData);
-    data.map(
-      (item: CsvFormat) =>
-        (item.type = String(item.amount).startsWith("-") ? "витрати" : "дохід")
-    );
-    console.log(data);
-    setData(data);
-    setFilteredData(data);
-    setLoading(false);
-  }, []);
+  const { data, filteredData, setFilteredData, isLoading } = useData();
+  const { setPage, page, paginatiedData, totalPages } =
+    UsePagination(filteredData);
 
   if (isLoading) return <h1>Loading...</h1>;
 
   return (
     <div className="bg-gray-800 flex flex-col justify-center items-center ">
       <DisplayAllCards data={filteredData} />
-      <div>
+      <div className="flex flex-row justify-center item-center h-30">
         <SearchByCounterpartyOrDescription
           data={data}
           filteredData={filteredData}
@@ -42,28 +27,20 @@ export default function DataPage() {
         />
         <Filter data={data} setFilteredData={setFilteredData} />
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th className="p-10">date</th>
-            <th className="p-10">counterparty</th>
-            <th className="p-10">description</th>
-            <th className="p-10">amount</th>
-            <th className="p-10">type</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData?.map((item, index) => (
-            <tr key={index} className="border-solid border-2">
-              <td className="border-solid border-2 p-5">{item.date}</td>
-              <td className="border-solid border-2 p-5">{item.counterparty}</td>
-              <td className="border-solid border-2 p-5">{item.description}</td>
-              <td className="border-solid border-2 p-5">{item.amount}</td>
-              <td className="border-solid border-2 p-5">{item.type}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      <TableComponent data={paginatiedData} />
+      <div>
+        <PaginationComponent
+          setPage={setPage}
+          page={page}
+          totalPages={totalPages}
+        />
+      </div>
+
+      <>
+        <h1 className="mt-20">5 Контрагентів за списком витрат:</h1>
+        <TableComponent data={TopCounterparties(data)} />
+      </>
     </div>
   );
 }

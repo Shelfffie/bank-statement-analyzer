@@ -1,23 +1,10 @@
 import { CsvFormat } from "@/app/_utils/types";
 import SummariesCard from "./card";
+import { calculateTotal } from "../../utils/statement";
 
 export default function DisplayAllCards({ data }: { data: CsvFormat[] }) {
-  const calculateTotal = (
-    data: CsvFormat[],
-    result: "profit" | "expenses" | "net profit"
-  ) => {
-    return data.reduce((total: number, current: CsvFormat) => {
-      if (result === "profit" && current.type === "дохід")
-        return total + current.amount;
-      else if (result === "expenses" && current.type === "витрати")
-        return total + current.amount;
-      else if (result === "net profit") return total + current.amount;
-      return total;
-    }, 0);
-  };
-
   return (
-    <div>
+    <div className="flex flex-row gap-10">
       <SummariesCard
         data={calculateTotal(data, "profit")}
         title={"Загальний дохід"}

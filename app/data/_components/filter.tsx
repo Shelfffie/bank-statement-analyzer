@@ -11,6 +11,7 @@ import {
   SelectItem,
   SelectContent,
 } from "@/components/ui/select";
+import { filterByItem } from "../utils/statement";
 
 export function Filter({
   data,
@@ -19,38 +20,23 @@ export function Filter({
   data: CsvFormat[];
   setFilteredData: React.Dispatch<React.SetStateAction<CsvFormat[]>>;
 }) {
-  const filterByItem = (e: string) => {
-    if (e === "default") {
-      setFilteredData(data);
-    } else if (e === "profit") {
-      setFilteredData(
-        data.filter((item) => !String(item.amount).startsWith("-"))
-      );
-    } else {
-      setFilteredData(
-        data.filter((item) => String(item.amount).startsWith("-"))
-      );
-    }
-  };
-
   return (
-    <div className="flex flex-row mt-15">
-      <p>Фільтр:</p>
+    <div className="flex items-center ml-5">
       <Select
         onValueChange={(e) => {
-          filterByItem(e);
+          filterByItem(e, setFilteredData, data);
           console.log(e);
         }}
       >
-        <SelectTrigger className="w-full max-w-48">
-          <SelectValue placeholder="Searching by" />
+        <SelectTrigger className="w-full max-w-40 rounded-sm">
+          <SelectValue placeholder="Фільтрувати за:" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Filter by type</SelectLabel>
-            <SelectItem value="default">Default state</SelectItem>
-            <SelectItem value="profit">Profit</SelectItem>
-            <SelectItem value="exprenses">Expenses</SelectItem>
+            <SelectLabel>Фільтрувати за типом:</SelectLabel>
+            <SelectItem value="default">Стандартний стан</SelectItem>
+            <SelectItem value="profit">Дохід</SelectItem>
+            <SelectItem value="exprenses">Витрати</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
