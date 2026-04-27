@@ -5,9 +5,11 @@ import type { ReactNode } from "react";
 export default function SummariesCard<T extends ReactNode>({
   data,
   title,
+  classes,
 }: {
   data: T;
   title: string;
+  classes?: string;
 }) {
   return (
     <Card
@@ -17,7 +19,9 @@ export default function SummariesCard<T extends ReactNode>({
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent>{data}</CardContent>
+      <CardContent>
+        <p className={classes}>{data}</p>
+      </CardContent>
     </Card>
   );
 }

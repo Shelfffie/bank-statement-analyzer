@@ -8,6 +8,7 @@ import { TopCounterparties } from "./utils/calculate-top-counterparties";
 import UsePagination from "./hooks/pagination";
 import { useData } from "./hooks/useData";
 import PaginationComponent from "./_components/pagination-buttons";
+import { Button } from "@/components/ui/button";
 
 export default function DataPage() {
   const { data, filteredData, setFilteredData, isLoading } = useData();
@@ -36,6 +37,7 @@ export default function DataPage() {
           totalPages={totalPages}
         />
       </div>
+      <Button>Зберегти відфільтровані дані</Button>
 
       <>
         <h1 className="mt-20">5 Контрагентів за списком витрат:</h1>
