@@ -35,6 +35,11 @@ export const calculateTotal = (
   result: "profit" | "expenses" | "net profit"
 ) => {
   const reduced = data.reduce((total: number, current: CsvFormat) => {
+    if (!current.type) {
+      current.type = String(current.amount).startsWith("-")
+        ? "витрати"
+        : "дохід";
+    }
     if (result === "profit" && current.type === "дохід")
       return total + current.amount;
     else if (result === "expenses" && current.type === "витрати")

@@ -1,7 +1,12 @@
 import { CsvFormat } from "../../_utils/types";
 
 export const TopCounterparties = (data: CsvFormat[]) => {
-  const expensesOnly = data.filter((item) => item.type === "витрати");
+  const expensesOnly = data.filter((item) => {
+    if (!item.type) {
+      item.type = String(item.amount).startsWith("-") ? "витрати" : "дохід";
+    }
+    return item.type === "витрати";
+  });
   const result: CsvFormat[] = Object.values(
     expensesOnly.reduce<Record<string, CsvFormat>>((acc, item) => {
       const key = item.counterparty;

@@ -24,10 +24,6 @@ export function useData() {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    router.push("/data");
-  }, [filteredData]);
-
   return {
     data,
     filteredData,

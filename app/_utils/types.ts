@@ -1,5 +1,12 @@
+export type ParsedFormat = {
+  date: string;
+  counterparty: string;
+  description: string;
+  amount: string;
+};
+
 export type CsvFormat = {
-  id: number;
+  id?: number;
   date: string;
   counterparty: string;
   description: string;

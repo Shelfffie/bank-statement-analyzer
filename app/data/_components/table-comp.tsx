@@ -2,9 +2,7 @@ import { CsvFormat } from "@/app/_utils/types";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -27,7 +25,9 @@ export default function TableComponent({
             <TableHead>Призначення</TableHead>
             <TableHead className="text">Сума</TableHead>
             <TableHead className="text-right">Tип</TableHead>
-            {skipped && <TableHead className="text-right">Помилка</TableHead>}
+            {skipped && (
+              <TableHead className="text-right">Причина вилучення</TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
