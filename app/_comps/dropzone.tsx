@@ -16,10 +16,10 @@ export default function Dropzone() {
   const divRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
-  const { convert } = useConvenrter();
+  const { convertAndCheck } = useConvenrter();
 
   const convertAndRelocate = async (file: File) => {
-    const data = await convert(file);
+    const data = await convertAndCheck(file);
     sessionStorage.setItem("data", JSON.stringify(data));
     router.push("/data");
   };

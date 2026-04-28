@@ -10,7 +10,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export default function TableComponent({ data }: { data: CsvFormat[] }) {
+export default function TableComponent({
+  data,
+  skipped,
+}: {
+  data: CsvFormat[];
+  skipped?: boolean;
+}) {
   return (
     <div className="w-11/12 m-10">
       <Table>
@@ -21,6 +27,7 @@ export default function TableComponent({ data }: { data: CsvFormat[] }) {
             <TableHead>Призначення</TableHead>
             <TableHead className="text">Сума</TableHead>
             <TableHead className="text-right">Tип</TableHead>
+            {skipped && <TableHead className="text-right">Помилка</TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -31,6 +38,9 @@ export default function TableComponent({ data }: { data: CsvFormat[] }) {
               <TableCell>{item.description}</TableCell>
               <TableCell>{item.amount}</TableCell>
               <TableCell className="text-right">{item.type}</TableCell>
+              {skipped && (
+                <TableCell className="text-right">{item.error}</TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>

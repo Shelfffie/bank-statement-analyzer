@@ -30,7 +30,10 @@ export function SearchByCounterpartyOrDescription({
 
   useEffect(() => {
     if (inputValue.trim() === "") return;
-    if (selectedItem === "default") return;
+    if (selectedItem === "default") {
+      setFilteredData(data);
+      return;
+    }
     if (timer.current) clearTimeout(timer.current);
     searchFilter(
       inputValue,

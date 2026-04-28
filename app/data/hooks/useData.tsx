@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 export function useData() {
   const router = useRouter();
   const [data, setData] = useState<CsvFormat[]>([]);
+  const [skippedFields, setSkippedFields] = useState<CsvFormat[]>([]);
   const [filteredData, setFilteredData] = useState<CsvFormat[]>([]);
   const [isLoading, setLoading] = useState<boolean>(true);
 
@@ -17,14 +18,9 @@ export function useData() {
       return;
     }
     const data = JSON.parse(sessionStorageData);
-    data.map(
-      (item: CsvFormat, index: number) => (
-        (item.type = String(item.amount).startsWith("-") ? "витрати" : "дохід"),
-        (item.id = index)
-      )
-    );
-    setData(data);
-    setFilteredData(data);
+    setData(data.returnedData);
+    setFilteredData(data.returnedData);
+    setSkippedFields(data.skippedFields);
     setLoading(false);
   }, []);
 
@@ -32,5 +28,12 @@ export function useData() {
     router.push("/data");
   }, [filteredData]);
 
-  return { data, filteredData, setFilteredData, isLoading, setLoading };
+  return {
+    data,
+    filteredData,
+    setFilteredData,
+    isLoading,
+    setLoading,
+    skippedFields,
+  };
 }

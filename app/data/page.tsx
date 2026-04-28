@@ -9,6 +9,7 @@ import UsePagination from "./hooks/pagination";
 import { useData } from "./hooks/useData";
 import PaginationComponent from "./_components/pagination-buttons";
 import { Button } from "@/components/ui/button";
+import SkippedFields from "./_components/skipped-fields";
 
 export default function DataPage() {
   const { data, filteredData, setFilteredData, isLoading } = useData();
@@ -19,6 +20,7 @@ export default function DataPage() {
 
   return (
     <div className="bg-gray-800 flex flex-col justify-center items-center ">
+      <SkippedFields />
       <DisplayAllCards data={filteredData} />
       <div className="flex flex-row justify-center item-center h-30">
         <SearchByCounterpartyOrDescription

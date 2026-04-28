@@ -5,4 +5,5 @@ export type CsvFormat = {
   description: string;
   amount: number;
   type?: string;
+  error?: string | undefined;
 };
