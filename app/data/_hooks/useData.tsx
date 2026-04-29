@@ -2,9 +2,9 @@
 
 import { useEffect, useReducer } from "react";
 import { useRouter } from "next/navigation";
-import { reducer } from "../utils/reducer";
+import { reducer } from "../_utils/reducer";
 
-export function useData() {
+export function useData(id: string) {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, {
     data: [],
@@ -17,7 +17,7 @@ export function useData() {
   });
 
   useEffect(() => {
-    const sessionStorageData = sessionStorage.getItem("data");
+    const sessionStorageData = sessionStorage.getItem(decodeURIComponent(id));
     if (!sessionStorageData) {
       router.push("/");
       return;
@@ -32,7 +32,7 @@ export function useData() {
       },
     });
     dispatch({ type: "setLoading", payload: false });
-  }, [router]);
+  }, [router, id]);
 
   return {
     data: state.data,

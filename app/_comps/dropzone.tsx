@@ -20,8 +20,11 @@ export default function Dropzone() {
 
   const convertAndRelocate = async (file: File) => {
     const data = await convertAndCheck(file);
-    sessionStorage.setItem("data", JSON.stringify(data));
-    router.push("/data");
+    const name = file.name.replace(/\.[^.]+$/, "");
+    sessionStorage.setItem(name, JSON.stringify(data));
+    console.log("URL NAME:", name);
+
+    router.push(`/data/${name}`);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {

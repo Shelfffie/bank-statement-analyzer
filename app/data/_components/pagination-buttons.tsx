@@ -6,7 +6,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { visiblePages } from "../utils/visible-pages-pagination";
+import { visiblePages } from "../_utils/visible-pages-pagination";
 
 export default function PaginationComponent({
   setPage,

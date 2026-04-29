@@ -1,4 +1,3 @@
-"use client";
 import Papa from "papaparse";
 import type { CsvFormat, ParsedFormat } from "../_utils/types";
 import { CsvSchema } from "@/schemas/csv-file";

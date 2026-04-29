@@ -1,10 +1,14 @@
 "use client";
 import { useState } from "react";
-import { useData } from "../hooks/useData";
+import { useData } from "../_hooks/useData";
 import TableComponent from "./table-comp";
+import { CsvFormat } from "@/app/_utils/types";
 
-export default function SkippedFields() {
-  const { skippedFields } = useData();
+export default function SkippedFields({
+  skippedFields,
+}: {
+  skippedFields: CsvFormat[];
+}) {
   const [showErrors, setShowErrors] = useState<boolean>(false);
   return (
     <div className="w-full flex flex-col pl-10 pt-10">

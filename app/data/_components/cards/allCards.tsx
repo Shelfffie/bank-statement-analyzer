@@ -1,6 +1,6 @@
 import { CsvFormat } from "@/app/_utils/types";
 import SummariesCard from "./card";
-import { calculateTotal } from "../../utils/statement";
+import { calculateTotal } from "../../_utils/statement";
 
 export default function DisplayAllCards({ data }: { data: CsvFormat[] }) {
   const net = calculateTotal(data, "net profit");
