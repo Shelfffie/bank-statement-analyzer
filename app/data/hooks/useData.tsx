@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 import { CsvFormat } from "@/app/_utils/types";
 import { useRouter } from "next/navigation";
 
@@ -22,7 +22,7 @@ export function useData() {
     setFilteredData(data.returnedData);
     setSkippedFields(data.skippedFields);
     setLoading(false);
-  }, []);
+  }, [router]);
 
   return {
     data,

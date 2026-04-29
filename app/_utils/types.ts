@@ -14,3 +14,15 @@ export type CsvFormat = {
   type?: string;
   error?: string | undefined;
 };
+
+export type State = {
+  data: any[];
+  search: string;
+  category: string | null;
+};
+
+export type Action =
+  | { type: "init"; payload: { data: CsvFormat[]; skippedFields: CsvFormat[] } }
+  | { type: "setSearch"; payload: string }
+  | { type: "setCategory"; payload: string | null }
+  | { type: "setLoading"; payload: boolean };
