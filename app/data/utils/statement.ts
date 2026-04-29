@@ -1,32 +1,29 @@
 import { CsvFormat } from "@/app/_utils/types";
 
 export const filterByItem = (
-  e: string,
-  setFilteredData: React.Dispatch<React.SetStateAction<CsvFormat[]>>,
+  category: "default" | "profit" | "exprenses",
   data: CsvFormat[]
 ) => {
-  if (e === "default") {
-    setFilteredData(data);
-  } else if (e === "profit") {
-    setFilteredData(data.filter((item) => item.type === "дохід"));
+  if (category === "default") {
+    return data;
+  } else if (category === "profit") {
+    return data.filter((item) => item.type === "дохід");
   } else {
-    setFilteredData(data.filter((item) => item.type === "витрати"));
+    return data.filter((item) => item.type === "витрати");
   }
 };
 
 export const searchFilter = (
   inputValue: string,
-  timer: NodeJS.Timeout | null,
   data: CsvFormat[],
-  setFilteredData: React.Dispatch<React.SetStateAction<CsvFormat[]>>,
-  selectedItem: "counterparty" | "description"
+  selectedItem: "default" | "counterparty" | "description"
 ) => {
-  timer = setTimeout(() => {
-    const result = data.filter((item) =>
-      item[selectedItem].toLowerCase().includes(inputValue.toLowerCase())
-    );
-    setFilteredData(result);
-  }, 1000);
+  if (selectedItem === "default") {
+    return data;
+  }
+  return data.filter((item) =>
+    item[selectedItem].toLowerCase().includes(inputValue.toLowerCase())
+  );
 };
 
 export const calculateTotal = (

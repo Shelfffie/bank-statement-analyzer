@@ -16,13 +16,35 @@ export type CsvFormat = {
 };
 
 export type State = {
-  data: any[];
+  data: CsvFormat[];
+  filteredData: CsvFormat[];
+  skippedFields: CsvFormat[];
+  isLoading: boolean;
   search: string;
-  category: string | null;
+  selectedItem: "default" | "counterparty" | "description";
+  category: "default" | "profit" | "exprenses";
 };
 
 export type Action =
-  | { type: "init"; payload: { data: CsvFormat[]; skippedFields: CsvFormat[] } }
-  | { type: "setSearch"; payload: string }
-  | { type: "setCategory"; payload: string | null }
+  | {
+      type: "init";
+      payload: {
+        data: CsvFormat[];
+        skippedFields: CsvFormat[];
+        filteredData: CsvFormat[];
+      };
+    }
+  | {
+      type: "setSearch";
+      payload: {
+        value: string;
+        selectedItem: "default" | "counterparty" | "description";
+      };
+    }
+  | {
+      type: "setCategory";
+      payload: {
+        value: "default" | "profit" | "exprenses";
+      };
+    }
   | { type: "setLoading"; payload: boolean };

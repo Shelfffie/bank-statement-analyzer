@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import SkippedFields from "./_components/skipped-fields";
 
 export default function DataPage() {
-  const { data, filteredData, setFilteredData, isLoading } = useData();
+  const { data, filteredData, isLoading, setSearch, setCategory } = useData();
   const { setPage, page, paginatiedData, totalPages } =
     UsePagination(filteredData);
 
@@ -23,12 +23,8 @@ export default function DataPage() {
       <SkippedFields />
       <DisplayAllCards data={filteredData} />
       <div className="flex flex-row justify-center item-center h-30">
-        <SearchByCounterpartyOrDescription
-          data={data}
-          filteredData={filteredData}
-          setFilteredData={setFilteredData}
-        />
-        <Filter data={data} setFilteredData={setFilteredData} />
+        <SearchByCounterpartyOrDescription setSearch={setSearch} />
+        <Filter setCategory={setCategory} />
       </div>
 
       <TableComponent data={paginatiedData} />

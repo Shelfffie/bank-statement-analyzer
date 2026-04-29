@@ -1,7 +1,6 @@
 "use client";
 
-import { CsvFormat } from "@/app/_utils/types";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -12,15 +11,14 @@ import {
   SelectItem,
   SelectContent,
 } from "@/components/ui/select";
-import { searchFilter } from "../utils/statement";
 
 export function SearchByCounterpartyOrDescription({
-  data,
-  setFilteredData,
+  setSearch,
 }: {
-  data: CsvFormat[];
-  filteredData: CsvFormat[];
-  setFilteredData: React.Dispatch<React.SetStateAction<CsvFormat[]>>;
+  setSearch: (
+    value: string,
+    selectedItem: "default" | "counterparty" | "description"
+  ) => void;
 }) {
   const [inputValue, setInputValue] = useState<string>("");
   const [selectedItem, setSelectedItem] = useState<
@@ -29,20 +27,13 @@ export function SearchByCounterpartyOrDescription({
   const timer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (inputValue.trim() === "") return;
-    if (selectedItem === "default") {
-      setFilteredData(data);
-      return;
-    }
     if (timer.current) clearTimeout(timer.current);
-    searchFilter(
-      inputValue,
-      timer.current,
-      data,
-      setFilteredData,
-      selectedItem
-    );
-  }, [inputValue, selectedItem, data, setFilteredData]);
+    if (inputValue.trim() === "") return;
+
+    timer.current = setTimeout(() => {
+      setSearch(inputValue, selectedItem);
+    }, 500);
+  }, [inputValue, selectedItem, setSearch]);
 
   return (
     <div className="flex flex-row justify-center items-center">

@@ -1,5 +1,4 @@
 "use client";
-import { CsvFormat } from "@/app/_utils/types";
 import {
   Select,
   SelectValue,
@@ -9,21 +8,17 @@ import {
   SelectItem,
   SelectContent,
 } from "@/components/ui/select";
-import { filterByItem } from "../utils/statement";
 
 export function Filter({
-  data,
-  setFilteredData,
+  setCategory,
 }: {
-  data: CsvFormat[];
-  setFilteredData: React.Dispatch<React.SetStateAction<CsvFormat[]>>;
+  setCategory: (value: "default" | "profit" | "exprenses") => void;
 }) {
   return (
     <div className="flex items-center ml-5">
       <Select
-        onValueChange={(e) => {
-          filterByItem(e, setFilteredData, data);
-          console.log(e);
+        onValueChange={(e: "default" | "profit" | "exprenses") => {
+          setCategory(e);
         }}
       >
         <SelectTrigger className="w-full max-w-40 rounded-sm">
