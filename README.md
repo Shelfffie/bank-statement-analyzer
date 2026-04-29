@@ -14,4 +14,5 @@ npm run dev
 
 ## Скріншот головної ("/") сторінки
 
+/public/main-page.screenshot.jpg
 
