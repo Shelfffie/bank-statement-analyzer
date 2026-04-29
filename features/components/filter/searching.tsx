@@ -28,12 +28,13 @@ export function SearchByCounterpartyOrDescription({
 
   useEffect(() => {
     if (timer.current) clearTimeout(timer.current);
-    if (inputValue.trim() === "") return;
 
     timer.current = setTimeout(() => {
       setSearch(inputValue, selectedItem);
     }, 500);
-  }, [inputValue, selectedItem, setSearch]);
+
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputValue, selectedItem]);
 
   return (
     <div className="flex flex-row justify-center items-center">

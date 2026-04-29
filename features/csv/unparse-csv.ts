@@ -1,8 +1,10 @@
-import { CsvFormat } from "@/app/_utils/types";
+import { CsvFormat } from "@/features/utils/types";
 import Papa from "papaparse";
 
 export const handleExport = (filteredData: CsvFormat[]) => {
-  const csv = Papa.unparse(filteredData.map(({ id, type, ...rest }) => rest));
+  const csv = Papa.unparse(
+    filteredData.map(({ id: _id, type: _type, ...rest }) => rest)
+  );
 
   const blob = new Blob([csv], {
     type: "text/csv;charset=utf-8",

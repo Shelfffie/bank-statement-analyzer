@@ -22,7 +22,7 @@ export type State = {
   isLoading: boolean;
   search: string;
   selectedItem: "default" | "counterparty" | "description";
-  category: "default" | "profit" | "exprenses";
+  category: "default" | "profit" | "expenses";
 };
 
 export type Action =
@@ -44,7 +44,7 @@ export type Action =
   | {
       type: "setCategory";
       payload: {
-        value: "default" | "profit" | "exprenses";
+        value: "default" | "profit" | "expenses";
       };
     }
   | { type: "setLoading"; payload: boolean };

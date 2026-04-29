@@ -1,17 +1,17 @@
 "use client";
 
-import { SearchByCounterpartyOrDescription } from "../_components/searching";
-import { Filter } from "../_components/filter";
-import DisplayAllCards from "../_components/cards/allCards";
-import TableComponent from "../_components/table-comp";
-import { TopCounterparties } from "../_utils/calculate-top-counterparties";
-import UsePagination from "../_hooks/pagination";
-import { useData } from "../_hooks/useData";
-import PaginationComponent from "../_components/pagination-buttons";
+import { SearchByCounterpartyOrDescription } from "../../../features/components/filter/searching";
+import { Filter } from "../../../features/components/filter/filter";
+import DisplayAllCards from "../../../features/components/cards/allCards";
+import TableComponent from "../../../features/components/table-comp";
+import { getTop5 } from "../../../features/statements/calculate-top-counterparties";
+import UsePagination from "../../../features/hooks/pagination";
+import { useData } from "../../../features/hooks/useData";
+import PaginationComponent from "../../../features/components/pagination-buttons";
 import { Button } from "@/components/ui/button";
-import SkippedFields from "../_components/skipped-fields";
+import SkippedFields from "../../../features/components/skipped-fields";
 import { useParams } from "next/navigation";
-import { handleExport } from "../_utils/unparse-csv";
+import { handleExport } from "../../../features/csv/unparse-csv";
 
 export default function DataPage() {
   const params = useParams<{ id: string }>();
@@ -31,7 +31,9 @@ export default function DataPage() {
 
   return (
     <div className="bg-gray-800 flex flex-col justify-center items-center ">
-      <SkippedFields skippedFields={skippedFields} />
+      {skippedFields.length > 0 && (
+        <SkippedFields skippedFields={skippedFields} />
+      )}
       <DisplayAllCards data={filteredData} />
       <div className="flex flex-row justify-center item-center h-30">
         <SearchByCounterpartyOrDescription setSearch={setSearch} />
@@ -46,13 +48,17 @@ export default function DataPage() {
           totalPages={totalPages}
         />
       </div>
-      <Button onClick={() => handleExport(filteredData)}>
-        Зберегти відфільтровані дані
-      </Button>
-
+      <section className="w-full flex justify-end">
+        <Button
+          onClick={() => handleExport(filteredData)}
+          className="mr-10 mt-5 rounded-sm border-gray-50"
+        >
+          Зберегти відфільтровані дані
+        </Button>
+      </section>
       <>
         <h1 className="mt-20">5 Контрагентів за списком витрат:</h1>
-        <TableComponent data={TopCounterparties(data)} />
+        <TableComponent data={getTop5(data)} />
       </>
     </div>
   );

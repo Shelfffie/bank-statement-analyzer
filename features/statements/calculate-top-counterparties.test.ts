@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { TopCounterparties } from "./calculate-top-counterparties";
+import { getTop5 } from "./calculate-top-counterparties";
 
 const arrTest = [
   {
@@ -54,7 +54,7 @@ const arrTest = [
 ];
 
 test("return top five countriparties from expenses", () => {
-  expect(TopCounterparties(arrTest)).toStrictEqual([
+  expect(getTop5(arrTest)).toStrictEqual([
     {
       date: "2/18/2025",
       counterparty: 'ТОВ "Ню Продакшн"',

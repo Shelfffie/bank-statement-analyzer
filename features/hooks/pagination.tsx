@@ -1,6 +1,6 @@
 "use client";
 
-import { CsvFormat } from "@/app/_utils/types";
+import { CsvFormat } from "@/features/utils/types";
 import { useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 

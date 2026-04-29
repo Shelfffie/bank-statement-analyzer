@@ -1,4 +1,4 @@
-import { Action, State } from "@/app/_utils/types";
+import { Action, State } from "@/features/utils/types";
 import { filterByItem, searchFilter } from "./statement";
 
 export function reducer(state: State, action: Action): State {

@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
-import { useData } from "../_hooks/useData";
 import TableComponent from "./table-comp";
-import { CsvFormat } from "@/app/_utils/types";
+import { CsvFormat } from "@/features/utils/types";
 
 export default function SkippedFields({
   skippedFields,

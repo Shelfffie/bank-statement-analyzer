@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 import { useRouter } from "next/navigation";
-import { reducer } from "../_utils/reducer";
+import { reducer } from "../statements/reducer";
 
 export function useData(id: string) {
   const router = useRouter();
@@ -16,18 +16,24 @@ export function useData(id: string) {
     category: "default",
   });
 
+  function loadDataFromStorage(id: string) {
+    const raw = sessionStorage.getItem(decodeURIComponent(id));
+    if (!raw) return null;
+
+    return JSON.parse(raw);
+  }
+
   useEffect(() => {
-    const sessionStorageData = sessionStorage.getItem(decodeURIComponent(id));
-    if (!sessionStorageData) {
+    const data = loadDataFromStorage(id);
+    if (!data) {
       router.push("/");
       return;
     }
-    const data = JSON.parse(sessionStorageData);
     dispatch({
       type: "init",
       payload: {
-        data: data.returnedData,
-        filteredData: data.returnedData,
+        data: data.data,
+        filteredData: data.data,
         skippedFields: data.skippedFields,
       },
     });
@@ -39,21 +45,24 @@ export function useData(id: string) {
     filteredData: state.filteredData,
     skippedFields: state.skippedFields,
     isLoading: state.isLoading,
-    setSearch: (
-      value: string,
-      selectedItem: "default" | "counterparty" | "description"
-    ) => {
-      dispatch({
-        type: "setSearch",
-        payload: { value, selectedItem },
-      });
-    },
-    setCategory: (value: "default" | "profit" | "exprenses") => {
+    setSearch: useCallback(
+      (
+        value: string,
+        selectedItem: "default" | "counterparty" | "description"
+      ) => {
+        dispatch({
+          type: "setSearch",
+          payload: { value, selectedItem },
+        });
+      },
+      []
+    ),
+    setCategory: useCallback((value: "default" | "profit" | "expenses") => {
       dispatch({
         type: "setCategory",
         payload: { value },
       });
-    },
+    }, []),
     setLoading: (value: boolean) =>
       dispatch({
         type: "setLoading",

@@ -1,4 +1,4 @@
-import { CsvFormat } from "@/app/_utils/types";
+import { CsvFormat } from "@/features/utils/types";
 import {
   Table,
   TableBody,

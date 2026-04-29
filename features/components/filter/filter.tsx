@@ -12,12 +12,12 @@ import {
 export function Filter({
   setCategory,
 }: {
-  setCategory: (value: "default" | "profit" | "exprenses") => void;
+  setCategory: (value: "default" | "profit" | "expenses") => void;
 }) {
   return (
     <div className="flex items-center ml-5">
       <Select
-        onValueChange={(e: "default" | "profit" | "exprenses") => {
+        onValueChange={(e: "default" | "profit" | "expenses") => {
           setCategory(e);
         }}
       >
@@ -29,7 +29,7 @@ export function Filter({
             <SelectLabel>Фільтрувати за типом:</SelectLabel>
             <SelectItem value="default">Стандартний стан</SelectItem>
             <SelectItem value="profit">Дохід</SelectItem>
-            <SelectItem value="exprenses">Витрати</SelectItem>
+            <SelectItem value="expenses">Витрати</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
